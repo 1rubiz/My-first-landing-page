@@ -22,9 +22,8 @@
  * Define Global Variables
  * 
 */
-
+const numberOfSections = document.querySelectorAll('section');
 const myList= document.getElementById("navbar__list");
-let myArray= ["Section 1", "Section 2", "Section 3", "Section 4", "Section 5"];
 /**
  * End Global Variables
  * Start Helper Functions
@@ -32,27 +31,20 @@ let myArray= ["Section 1", "Section 2", "Section 3", "Section 4", "Section 5"];
 */
 
 // Build nav
-//loops through the array and creates the links with array items
-function link(){
-    for (let i=0; i< myArray.length;i++){
-        const mySec= document.createElement("li");
-        mySec.id="list"+i;
-        for (let x = 0; x < 1; x++) {
-            let list=document.createTextNode(myArray[i]);
-            mySec.appendChild(list);    
-            mySec.className="menu__link";
-            myList.append(mySec);
+//it counts the number of sections and creates a link in accordance.
 
-            
-        }
-    }   
-}    
-link();
-
-
+numberOfSections.forEach(function (num, index){
+    const mySec= document.createElement("li");
+    mySec.id= "list"+ index;
+    mySec.classList.add("narv");
+    mySec.innerHTML= 'Section'+(index+1);
+    myList.append(mySec);    
+}); 
+  
+    
 //it initiats the smooth scroll on click 
 (function (){
-    for (let i=0; i <myArray.length; i++){
+    for (let i=0; i <numberOfSections.length; i++){
            let scrol=document.getElementById("list"+i);
             scrol.addEventListener("click", function(evt){
                  evt.preventDefault();
@@ -70,40 +62,42 @@ window.onbeforeunload = function () {
 }
 
 // Helper Function
-//function checks if the parameter(given element) is in the view port.
+//function checks if the parameter(given element) is in a viewport larger than 600px max-width.
   function isInViewport(element) {
     const rect = element.getBoundingClientRect();
+    let clientheight = document.documentElement.clientHeight;
+    let clientwidth = document.documentElement.clientWidth;
     return (
         rect.top >= 0 &&
         rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        rect.bottom <= (window.innerHeight || clientheight) &&
+        rect.right <= (window.innerWidth || clientwidth)
     );
 }
-
-// Scroll to section on link click
-document.addEventListener('click', function () {
-    for (let x=0; x< myArray.length;x++)
-    {
-        let section=document.getElementById("section"+x);
-        let scrol=document.getElementById("list"+x);
-       if (isInViewport(section))
-        {
-           scrol.classList.add('active');
-        } else if (!isInViewport(section))
-           {
-             scrol.classList.remove('active');
-           }
-    }
-});
+// viewport function for smaller devices
+    var mob = window.matchMedia('(max-width: 600px)');
+function isInTheViewport(el) {
+    var rect = el.getBoundingClientRect();
+    return ((rect.bottom >=623) && (rect.top <= 100))
+}
 
 // Set sections as active when scrolled into viewport
-document.addEventListener('scroll', function () 
+document.addEventListener('scroll', () => 
 {
-    for (let x=0; x< myArray.length;x++)
+    for (let x=0; x<numberOfSections.length;x++)
     {
         let section=document.getElementById("section"+x);
         let scrol=document.getElementById("list"+x);
+        if (mob.matches){ //if the device has a max-width 0f 600px e.g android phones
+            if (isInTheViewport(section))
+            {
+                scrol.classList.add('active');
+             } else if (!isInTheViewport(section))
+                {
+                  scrol.classList.remove('active');
+                 }
+        }
+        else {//if the device max-width is larger e.g tablets 
        if (isInViewport(section))
        {
            scrol.classList.add('active');
@@ -111,7 +105,7 @@ document.addEventListener('scroll', function ()
            {
              scrol.classList.remove('active');
             }
-    }
+    }}
 });
 
 // add my insta-name to the footer
