@@ -24,6 +24,7 @@
 */
 const numberOfSections = document.querySelectorAll('section');
 const myList= document.getElementById("navbar__list");
+const mob = window.matchMedia('(max-width: 600px)');
 /**
  * End Global Variables
  * Start Helper Functions
@@ -75,10 +76,10 @@ window.onbeforeunload = function () {
     );
 }
 // viewport function for smaller devices
-    var mob = window.matchMedia('(max-width: 600px)');
-function isInTheViewport(el) {
-    var rect = el.getBoundingClientRect();
-    return ((rect.bottom >=623) && (rect.top <= 100))
+function isInTheViewport(el) 
+{
+    let rect = el.getBoundingClientRect();
+    return ((rect.bottom >=623) && (rect.top <= 220))
 }
 
 // Set sections as active when scrolled into viewport
