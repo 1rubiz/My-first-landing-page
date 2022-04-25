@@ -36,7 +36,7 @@ const myList= document.getElementById("navbar__list");
 numberOfSections.forEach(function (num, index){
     const mySec= document.createElement("li");
     mySec.id= "list"+ index;
-    mySec.classList.add("narv");
+    mySec.classList.add("menu__link");
     mySec.innerHTML= 'Section'+(index+1);
     myList.append(mySec);    
 }); 
@@ -50,7 +50,7 @@ numberOfSections.forEach(function (num, index){
                  evt.preventDefault();
                   let section=document.getElementById("section"+i);
                  section.scrollIntoView({behavior: "smooth"});
-                 section.style.cssText="padding-top:40px";
+                 section.style.cssText="padding-top:50px";
                
             })
     }
